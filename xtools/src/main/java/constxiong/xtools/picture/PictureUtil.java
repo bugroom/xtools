@@ -25,11 +25,14 @@ public class PictureUtil {
 	 */
 	public static void drawImage(BufferedImage bufferedImage, String type, File file) throws IOException {
 		Graphics graphics = bufferedImage.getGraphics();//获取图片画笔
-		graphics.fillRect(0, 50, 200, 100);//填充图片，默认白色
-		graphics.setColor(new Color(12, 123, 88));//设置画笔颜色
-		graphics.setFont(new Font("宋体", Font.ITALIC, 30));//设置字体
-		graphics.drawString("绘制简单图片", 10, 100);
-		graphics.dispose();//释放画笔
-		ImageIO.write(bufferedImage, type, file);
+		try {
+			graphics.fillRect(0, 50, 200, 100);//填充背景，默认白色
+			graphics.setColor(new Color(120, 120, 120));//设置画笔颜色
+			graphics.setFont(new Font("宋体", Font.ITALIC, 30));//设置字体
+			graphics.drawString("绘制简单图片", 10, 100);
+			ImageIO.write(bufferedImage, type, file);
+		} finally {
+			graphics.dispose();//释放画笔
+		}
 	}
 }
