@@ -13,7 +13,7 @@ import constxiong.xtools.path.PathUtil;
  * @author ConstXiong
  * @date 2019-03-04 16:28:11
  */
-public class PictureUtilTest {
+public class ImageUtilTest {
 
 	@Test
 	public void testDrawImage() throws IOException {
@@ -23,7 +23,7 @@ public class PictureUtilTest {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		PictureUtil.drawImage(bufferedImage, "jpg", 
+		ImageUtil.drawSimpleImage(bufferedImage, "jpg", 
 				new File(imagePath + "simple.jpg"));
 	}
 }
