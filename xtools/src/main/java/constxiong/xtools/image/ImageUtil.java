@@ -61,7 +61,7 @@ public class ImageUtil {
 	}
 	
 	/**
-	 * 裁剪生成原图，生成新的图片
+	 * 裁剪原图，生成新的图片
 	 * @param srcPath 原图地址
 	 * @param destPath 裁剪后的图片地址
 	 * @param x 裁剪开始x坐标
