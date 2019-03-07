@@ -2,8 +2,13 @@ package constxiong.xtools.picture;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import constxiong.xtools.path.PathUtil;
@@ -16,6 +21,8 @@ import constxiong.xtools.path.PathUtil;
 public class ImageUtilTest {
 	
 	private static final String IMAGE_PATH = PathUtil.getProjectPath() + File.separator + "images" + File.separator;
+	
+	private static final String FILE_PATH = PathUtil.getProjectPath() + File.separator + "files" + File.separator;
 
 	/**
 	 * 测试图片绘制
@@ -48,4 +55,71 @@ public class ImageUtilTest {
 		String formatName = "jpg";
 		ImageUtil.cutImage(srcPath, destPath, x, y, width, height, formatName);
 	}
+	
+	/**
+	 * 测试图片后缀名
+	 */
+	@Test
+	public void testIsImageBySuffix() {
+		String imageSuffix = "jpg";
+		Assert.assertTrue(ImageUtil.isImageBySuffix(imageSuffix));
+		
+		imageSuffix = "jpG";
+		Assert.assertTrue(ImageUtil.isImageBySuffix(imageSuffix));
+		
+		imageSuffix = "png";
+		Assert.assertTrue(ImageUtil.isImageBySuffix(imageSuffix));
+		
+		imageSuffix = "bmp";
+		Assert.assertTrue(ImageUtil.isImageBySuffix(imageSuffix));
+		
+		imageSuffix = "gif";
+		Assert.assertTrue(ImageUtil.isImageBySuffix(imageSuffix));
+		
+		imageSuffix = "JPEG";
+		Assert.assertTrue(ImageUtil.isImageBySuffix(imageSuffix));
+		
+		imageSuffix = "wbmp";
+		Assert.assertTrue(ImageUtil.isImageBySuffix(imageSuffix));
+		
+		imageSuffix = "xxx";
+		Assert.assertFalse(ImageUtil.isImageBySuffix(imageSuffix));
+	}
+	
+	/**
+	 * 测试文件名是否为图片格式
+	 */
+	@Test
+	public void testIsImageByFileName() {
+		String imageName = "simple.jpg";
+		Assert.assertTrue(ImageUtil.isImageByFileName(imageName));
+		
+		String textName = "text.txt";
+		Assert.assertFalse(ImageUtil.isImageByFileName(textName));
+	}
+	
+	/**
+	 * 测试文件是否为图片
+	 * @throws FileNotFoundException 
+	 * @throws MalformedURLException 
+	 */
+	@SuppressWarnings("resource")
+	@Test
+	public void testIsImage() throws FileNotFoundException, MalformedURLException {
+		String imageName = "simple.jpg";
+		String srcPath = IMAGE_PATH + imageName;
+		Assert.assertTrue(ImageUtil.isImage(srcPath, true));
+		
+		Assert.assertTrue(ImageUtil.isImage(new File(srcPath)));
+		
+		Assert.assertTrue(ImageUtil.isImage(new FileInputStream(srcPath)));
+		
+		String baiduLogoUrl = "https://www.baidu.com/img/bd_logo1.png";//百度logo图片
+		Assert.assertTrue(ImageUtil.isImage(new URL(baiduLogoUrl)));
+		
+		String textName = "text.txt";
+		String txtPath = FILE_PATH + textName;
+		Assert.assertFalse(ImageUtil.isImage(txtPath, true));
+	}
+	
 }
