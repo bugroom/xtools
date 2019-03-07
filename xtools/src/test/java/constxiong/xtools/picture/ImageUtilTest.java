@@ -11,6 +11,7 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 
+import constxiong.xtools.image.ImageUtil;
 import constxiong.xtools.path.PathUtil;
 
 /**
