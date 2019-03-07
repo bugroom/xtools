@@ -1,4 +1,4 @@
-package constxiong.xtools.picture;
+package constxiong.xtools.image;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
