@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 
@@ -21,6 +22,8 @@ import javax.imageio.stream.ImageInputStream;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import constxiong.xtools.convert.HexConverter;
+
 /**
  * 图片工具
  * @author ConstXiong
@@ -28,7 +31,44 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ImageUtil {
 	
+	/**
+	 * .分隔符
+	 */
 	private static final String FILE_CONNECTOR_POINT = "\\.";
+	
+	/**
+	 * jpg格式图片文件头hex信息 
+	 */
+	private static final String JPG_HEX = "FFD8FF";
+	/**
+	 * png格式图片文件头hex信息
+	 */
+	private static final String PNG_HEX = "89504E47";
+	/**
+	 * gif格式图片文件头hex信息
+	 */
+	private static final String GIF_HEX = "47494638";
+	/**
+	 * bmp格式图片文件头hex信息
+	 */
+	private static final String BMP_HEX = "424D";
+	
+	/**
+	 * jpg格式 
+	 */
+	public static final String JPG = "jpg";
+	/**
+	 * png格式
+	 */
+	public static final String PNG = "png";
+	/**
+	 * gif格式
+	 */
+	public static final String GIF = "gif";
+	/**
+	 * bmp格式
+	 */
+	public static final String BMP = "bmp";
 	
 	/**
 	 * 绘制图片
@@ -211,6 +251,38 @@ public class ImageUtil {
 		return false;
 	}
 	
+	/**
+	 * 获取图片类型
+	 * @param is 图片文件流
+	 * @return 图片类型:jpg|png|gif|bmp
+	 */
+	public static String getImageType(InputStream is) {
+		String type = null;
+		if (is != null) {
+			byte[] b = new byte[4];
+			try {
+				is.read(b, 0, b.length);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			String hexStr = HexConverter.byteArrayToHexString(b, true);//图片文件流前4个字节的头信息（子文字母）
+			if (hexStr != null) {
+				if (hexStr.startsWith(JPG_HEX)) {
+					type = JPG;
+				} else if (hexStr.startsWith(PNG_HEX)) {
+					type = PNG;
+				} else if (hexStr.startsWith(GIF_HEX)) {
+					type = GIF;
+				} else if (hexStr.startsWith(BMP_HEX)) {
+					type = BMP;
+				}
+			}
+		}
+		return type;
+	}
+	
+	
+	
 	public static boolean compressImage (String srcPath, String destPath, float quality) {
 		return false;
 	}
@@ -223,8 +295,23 @@ public class ImageUtil {
 		return false;
 	}
 	
-	public static boolean downloadImage() {
-		return false;
+	/**
+	 * 网络图片下载
+	 * @param url 图片url
+	 * @return 下载是否成功
+	 */
+	public static boolean downloadImage(String imageUrl, String formatName, File localFile) {
+		boolean isSuccess = false;
+		URL url = null;
+		try {
+			url = new URL(imageUrl);
+			isSuccess = ImageIO.write(ImageIO.read(url), formatName, localFile);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return isSuccess;
 	}
 	
 }

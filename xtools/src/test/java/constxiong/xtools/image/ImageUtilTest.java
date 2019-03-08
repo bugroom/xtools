@@ -123,4 +123,29 @@ public class ImageUtilTest {
 		Assert.assertFalse(ImageUtil.isImage(txtPath, true));
 	}
 	
+	/**
+	 * 测试获取图片类型
+	 * @throws FileNotFoundException 
+	 */
+	@Test
+	public void testGetImageType() throws FileNotFoundException {
+		String imageName = "simple.jpg";
+		String srcPath = IMAGE_PATH + imageName;
+		Assert.assertEquals(ImageUtil.JPG, ImageUtil.getImageType(new FileInputStream(srcPath)));
+		
+		imageName = "bd_logo1.png";
+		srcPath = IMAGE_PATH + imageName;
+		Assert.assertEquals(ImageUtil.PNG, ImageUtil.getImageType(new FileInputStream(srcPath)));
+	}
+	
+	/**
+	 * 测试图片下载
+	 */
+	@Test
+	public void testDownloadImage() {
+		String baiduLogoUrl = "https://www.baidu.com/img/bd_logo1.png";
+		File localFile = new File(IMAGE_PATH + "bd_logo1.png");
+		Assert.assertTrue(ImageUtil.downloadImage(baiduLogoUrl, ImageUtil.PNG, localFile));
+	}
+	
 }
