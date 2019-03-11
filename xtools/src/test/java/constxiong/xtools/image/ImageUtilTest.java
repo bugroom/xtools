@@ -181,4 +181,48 @@ public class ImageUtilTest {
 		Assert.assertTrue(ImageUtil.isImageByHeader(new File(srcPath)));
 	}
 	
+	/**
+	 * 测试图片压缩
+	 * @throws IOException
+	 */
+	@Test
+	public void testCompressImageByThumbnails() throws IOException {
+		String imageName = "java_coffee.png";
+		String srcPath = IMAGE_PATH + imageName;
+		
+		imageName = "java_coffee_compress.png";
+		String destPath = IMAGE_PATH + imageName;
+		
+		ImageUtil.compressImageByThumbnails(srcPath, destPath, 0.5f);
+		
+		long srcImageLength = new File(srcPath).length();
+		long destImageLength = new File(destPath).length();
+		
+		System.out.println(srcPath + ":" + srcImageLength);
+		System.out.println(destPath + ":" + destImageLength);
+		
+	}
+	
+	/**
+	 * 测试Jdk图片压缩
+	 * @throws IOException
+	 */
+	@Test
+	public void testCompressImageByJdk() throws IOException {
+		String imageName = "java_coffee.jpg";
+		String srcPath = IMAGE_PATH + imageName;
+		System.out.println(ImageUtil.getImageType(new File(srcPath)));
+		
+		imageName = "java_coffee_compress.jpg";
+		String destPath = IMAGE_PATH + imageName;
+		Assert.assertTrue(ImageUtil.compressImageByJdk(srcPath, destPath, 0.5f));
+		
+		long srcImageLength = new File(srcPath).length();
+		long destImageLength = new File(destPath).length();
+		
+		System.out.println(srcPath + ":" + srcImageLength);
+		System.out.println(destPath + ":" + destImageLength);
+		
+	}
+	
 }

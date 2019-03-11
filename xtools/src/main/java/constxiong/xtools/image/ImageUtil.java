@@ -9,16 +9,22 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -58,6 +64,10 @@ public class ImageUtil {
 	 * jpg格式 
 	 */
 	public static final String JPG = "jpg";
+	/**
+	 * jpeg格式 
+	 */
+	public static final String JPEG = "jpeg";
 	/**
 	 * png格式
 	 */
@@ -170,11 +180,7 @@ public class ImageUtil {
 	 * @return
 	 */
 	public static boolean isImageByFileName(String imageName) {
-		if (StringUtils.isNotEmpty(imageName)) {
-			String[] imageNames = imageName.split(FILE_CONNECTOR_POINT);
-			return isImageBySuffix(imageNames[imageNames.length - 1]);
-		}
-		return false;
+		return isImageBySuffix(getImageType(imageName));
 	}
 	
 	/**
@@ -303,6 +309,23 @@ public class ImageUtil {
 	}
 	
 	/**
+	 * 根据图片名称或者图片所在绝对路径，获取图片类型
+	 * @param imageNameOrPath 图片名称或者图片所在绝对路径
+	 * @return 图片类型（小写）， bmp|gif|jpg|jpeg|png
+	 */
+	public static String getImageType(String imageNameOrPath) {
+		String type = null;
+		if (StringUtils.isNotEmpty(imageNameOrPath)) {
+			String[] imageNames = imageNameOrPath.split(FILE_CONNECTOR_POINT);
+			String suffix = imageNames[imageNames.length - 1]; 
+			if (isImageBySuffix(suffix)) {
+				type = suffix.toLowerCase();
+			}
+		}
+		return type;
+	}
+	
+	/**
 	 * 根据文件头，判断文件流是否为合法图片
 	 * @param is 文件流
 	 * @return
@@ -321,9 +344,85 @@ public class ImageUtil {
 		return isImageBySuffix(getImageType(file));
 	}
 	
+	/**
+	 * 使用thumbnailator库，不修改图片尺寸，压缩图片占用内存
+	 * 支持所有格式图片，存在压缩后图片文件占用内存变大的情况
+	 * @param srcPath 原文件路径
+	 * @param destPath 压缩后的文件路径
+	 * @param quality 图片质量，取值范围[0, 1]
+	 * @return
+	 * @throws IOException 
+	 */
+	public static void compressImageByThumbnails (String srcPath, String destPath, float quality) throws IOException {
+		Thumbnails.of(srcPath).scale(1f).outputQuality(quality).toFile(destPath);
+	}
 	
-	public static boolean compressImage (String srcPath, String destPath, float quality) {
-		return false;
+	/**
+	 * 使用JDK，不修改图片尺寸，压缩图片占用内存
+	 * 仅仅支持文件头是jpg格式图片(png格式图片压缩后背景颜色存在问题)
+	 * 存在压缩后图片文件占用内存变大的情况
+	 * @param srcPath 原文件路径
+	 * @param destPath 压缩后的文件路径
+	 * @param quality 图片质量，取值范围[0, 1]
+	 * @return
+	 * @throws IOException
+	 */
+	public static boolean compressImageByJdk(String srcPath, String destPath, float quality) {
+		boolean isSuccess = false;
+		File image = new File(srcPath);
+		if (image.exists()) {
+			String imageType = null;
+			try {
+				imageType = getImageType(image);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			Iterator<ImageWriter> imageWriterIte = ImageIO.getImageWritersByFormatName(imageType);
+			if (imageWriterIte != null && imageWriterIte.hasNext()) {
+				
+				ImageWriter writer = imageWriterIte.next();
+				ImageWriteParam imgWriteParam;
+				BufferedImage srcImage = null;
+				FileOutputStream fos = null;
+				try {
+					//写图片参数
+					imgWriteParam = writer.getDefaultWriteParam();
+					//必须指定压缩方式为MODE_EXPLICIT
+					imgWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+					//设置图片质量
+					imgWriteParam.setCompressionQuality(quality);
+//					imgWriteParam.setProgressiveMode(ImageWriteParam.MODE_DISABLED);
+//					//图片颜色模式
+//					ColorModel colorModel = ImageIO.read(image).getColorModel();
+//					imgWriteParam.setDestinationType(new ImageTypeSpecifier(
+//							colorModel, colorModel.createCompatibleSampleModel(16, 16)));
+					
+					fos = new FileOutputStream(destPath);
+					writer.reset();
+					writer.setOutput(ImageIO.createImageOutputStream(fos));
+					srcImage = ImageIO.read(image);
+					writer.write(null, new IIOImage(srcImage, null, null), imgWriteParam);
+					isSuccess = true;
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					if (fos != null) {
+						try {
+							fos.flush();
+							fos.close();
+							writer.dispose();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		} else {
+			throw new RuntimeException("文件不存在[ " + srcPath + "]");
+		}
+		return isSuccess;
 	}
 	
 	public static boolean resizeImage (String srcPath, String destPath, int newWith, int newHeight) {
