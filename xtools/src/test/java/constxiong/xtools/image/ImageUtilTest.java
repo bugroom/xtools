@@ -11,7 +11,6 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 
-import constxiong.xtools.image.ImageUtil;
 import constxiong.xtools.path.PathUtil;
 
 /**
@@ -160,6 +159,26 @@ public class ImageUtilTest {
 		String baiduLogoUrl = "https://www.baidu.com/img/bd_logo1.png";
 		File localFile = new File(IMAGE_PATH + "bd_logo1.png");
 		Assert.assertTrue(ImageUtil.downloadImage(baiduLogoUrl, ImageUtil.PNG, localFile));
+	}
+	
+	@SuppressWarnings("resource")
+	@Test
+	public void testIsImageByHeader() throws FileNotFoundException {
+		String imageName = "simple.jpg";
+		String srcPath = IMAGE_PATH + imageName;
+		Assert.assertTrue(ImageUtil.isImageByHeader(new FileInputStream(srcPath)));
+		
+		imageName = "bd_logo1.png";
+		srcPath = IMAGE_PATH + imageName;
+		Assert.assertTrue(ImageUtil.isImageByHeader(new File(srcPath)));
+		
+		imageName = "simple.bmp";
+		srcPath = IMAGE_PATH + imageName;
+		Assert.assertTrue(ImageUtil.isImageByHeader(new File(srcPath)));
+		
+		imageName = "simple.gif";
+		srcPath = IMAGE_PATH + imageName;
+		Assert.assertTrue(ImageUtil.isImageByHeader(new File(srcPath)));
 	}
 	
 }

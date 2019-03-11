@@ -302,6 +302,24 @@ public class ImageUtil {
 		return getImageType(new FileInputStream(file));
 	}
 	
+	/**
+	 * 根据文件头，判断文件流是否为合法图片
+	 * @param is 文件流
+	 * @return
+	 */
+	public static boolean isImageByHeader(InputStream is) {
+		return isImageBySuffix(getImageType(is));
+	}
+	
+	/**
+	 * 根据文件头，判断文件流是否为合法图片
+	 * @param file 图片文件
+	 * @return
+	 * @throws FileNotFoundException 
+	 */
+	public static boolean isImageByHeader(File file) throws FileNotFoundException {
+		return isImageBySuffix(getImageType(file));
+	}
 	
 	
 	public static boolean compressImage (String srcPath, String destPath, float quality) {
