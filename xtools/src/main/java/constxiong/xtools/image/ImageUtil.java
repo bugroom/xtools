@@ -319,6 +319,8 @@ public class ImageUtil {
 	/**
 	 * 网络图片下载
 	 * @param url 图片url
+	 * @param formatName 文件格式名称
+	 * @param localFile 下载到本地文件
 	 * @return 下载是否成功
 	 */
 	public static boolean downloadImage(String imageUrl, String formatName, File localFile) {
