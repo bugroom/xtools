@@ -38,6 +38,12 @@ public class ImageUtilTest {
 		}
 		ImageUtil.drawSimpleImage(bufferedImage, "jpg", 
 				new File(IMAGE_PATH + "simple.jpg"));
+		
+		ImageUtil.drawSimpleImage(bufferedImage, "bmp", 
+				new File(IMAGE_PATH + "simple.bmp"));
+		
+		ImageUtil.drawSimpleImage(bufferedImage, "gif", 
+				new File(IMAGE_PATH + "simple.gif"));
 	}
 	
 	/**
@@ -136,6 +142,14 @@ public class ImageUtilTest {
 		imageName = "bd_logo1.png";
 		srcPath = IMAGE_PATH + imageName;
 		Assert.assertEquals(ImageUtil.PNG, ImageUtil.getImageType(new File(srcPath)));
+		
+		imageName = "simple.bmp";
+		srcPath = IMAGE_PATH + imageName;
+		Assert.assertEquals(ImageUtil.BMP, ImageUtil.getImageType(new File(srcPath)));
+		
+		imageName = "simple.gif";
+		srcPath = IMAGE_PATH + imageName;
+		Assert.assertEquals(ImageUtil.GIF, ImageUtil.getImageType(new File(srcPath)));
 	}
 	
 	/**
