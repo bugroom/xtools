@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -253,6 +254,11 @@ public class ImageUtil {
 	
 	/**
 	 * 获取图片类型
+	 * JPG图片头信息:FFD8FF
+	 * PNG图片头信息:89504E47
+	 * GIF图片头信息:47494638
+	 * BMP图片头信息:424D
+	 * 
 	 * @param is 图片文件流
 	 * @return 图片类型:jpg|png|gif|bmp
 	 */
@@ -279,6 +285,21 @@ public class ImageUtil {
 			}
 		}
 		return type;
+	}
+	
+	/**
+	 * 获取图片类型
+	 * JPG图片头信息:FFD8FF
+	 * PNG图片头信息:89504E47
+	 * GIF图片头信息:47494638
+	 * BMP图片头信息:424D
+	 * 
+	 * @param file 图片文件
+	 * @return 图片类型:jpg|png|gif|bmp
+	 * @throws FileNotFoundException 未找到文件
+	 */
+	public static String getImageType(File file) throws FileNotFoundException {
+		return getImageType(new FileInputStream(file));
 	}
 	
 	

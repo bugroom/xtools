@@ -135,7 +135,7 @@ public class ImageUtilTest {
 		
 		imageName = "bd_logo1.png";
 		srcPath = IMAGE_PATH + imageName;
-		Assert.assertEquals(ImageUtil.PNG, ImageUtil.getImageType(new FileInputStream(srcPath)));
+		Assert.assertEquals(ImageUtil.PNG, ImageUtil.getImageType(new File(srcPath)));
 	}
 	
 	/**
