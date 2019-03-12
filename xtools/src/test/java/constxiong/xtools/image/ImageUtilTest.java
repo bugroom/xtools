@@ -250,4 +250,19 @@ public class ImageUtilTest {
 		Assert.assertTrue(ImageUtil.downloadImageWithHeaders(baiduLogoUrl, ImageUtil.JPG, localFile, headers));
 	}
 	
+	/**
+	 * 测试重新生成图片宽、高
+	 * @throws IOException 
+	 */
+	@Test
+	public void testResizeImage() throws IOException {
+		String imageName = "java_coffee.jpg";
+		String srcPath = IMAGE_PATH + imageName;
+		
+		imageName = "java_coffee_resize.jpg";
+		String destPath = IMAGE_PATH + imageName;
+		boolean forceSize = true;
+		Assert.assertTrue(ImageUtil.resizeImage(srcPath, destPath, 3000, 3000, forceSize));
+	}
+	
 }
