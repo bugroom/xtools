@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -450,6 +452,50 @@ public class ImageUtil {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		return isSuccess;
+	}
+	
+	/**
+	 * 携带头信息下载网络图片
+	 * @param url 图片url
+	 * @param formatName 文件格式名称
+	 * @param localFile 下载到本地文件
+	 * @param headers http协议交互中header信息，如Cookie
+	 * @return 下载是否成功
+	 */
+	public static boolean downloadImageWithHeaders(String imageUrl, String formatName, File localFile, Map<String, String> headers) {
+		boolean isSuccess = false;
+		InputStream stream = null;
+		try {
+			URL url = new URL(imageUrl);
+			URLConnection conn = url.openConnection();
+			if (headers != null && !headers.isEmpty()) {
+				//设置头信息
+				for (Map.Entry<String, String> entry : headers.entrySet()) {
+					conn.setRequestProperty(entry.getKey(), entry.getValue());
+				}
+			}
+			conn.setDoInput(true);
+			stream = conn.getInputStream();
+			BufferedImage bufferedImg = ImageIO.read(stream);
+			if (bufferedImg != null) {
+				isSuccess = ImageIO.write(bufferedImg, formatName, localFile);
+			} else {
+				throw new RuntimeException("图片[" + imageUrl + "]下载失败");
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return isSuccess;
 	}
