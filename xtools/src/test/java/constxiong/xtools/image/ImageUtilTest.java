@@ -265,4 +265,20 @@ public class ImageUtilTest {
 		Assert.assertTrue(ImageUtil.resizeImage(srcPath, destPath, 200, 200, forceSize));
 	}
 	
+	/**
+	 * 测试修改图片格式
+	 * @throws FileNotFoundException
+	 */
+	@Test
+	public void testModifyImageFormat() throws FileNotFoundException {
+		String imageName = "java_coffee.jpg";
+		String srcPath = IMAGE_PATH + imageName;
+		
+		imageName = "java_coffee_midify.gif";
+		String destPath = IMAGE_PATH + imageName;
+		Assert.assertTrue(ImageUtil.modifyImageFormat(srcPath, destPath, "gif"));
+		
+		Assert.assertEquals(ImageUtil.getImageType(new File(destPath)),  "gif");
+	}
+	
 }

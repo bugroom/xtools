@@ -512,4 +512,34 @@ public class ImageUtil {
 		return isSuccess;
 	}
 	
+	/**
+	 * 修改原图的文件格式
+	 * @param srcPath 原图路径
+	 * @param destPath 新图路径
+	 * @param formatName 图片格式，支持bmp|gif|jpg|jpeg|png
+	 * @return
+	 */
+	public static boolean modifyImageFormat(String srcPath, String destPath, String formatName) {
+		boolean isSuccess = false;
+		InputStream fis = null;
+		try {
+			fis = new FileInputStream(srcPath); 
+			BufferedImage bufferedImg = ImageIO.read(fis);
+			isSuccess = ImageIO.write(bufferedImg, formatName, new File(destPath));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fis != null) {
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return isSuccess;
+	}
+	
 }
