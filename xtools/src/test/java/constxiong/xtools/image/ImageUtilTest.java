@@ -261,8 +261,8 @@ public class ImageUtilTest {
 		
 		imageName = "java_coffee_resize.jpg";
 		String destPath = IMAGE_PATH + imageName;
-		boolean forceSize = true;
-		Assert.assertTrue(ImageUtil.resizeImage(srcPath, destPath, 3000, 3000, forceSize));
+		boolean forceSize = false;
+		Assert.assertTrue(ImageUtil.resizeImage(srcPath, destPath, 200, 200, forceSize));
 	}
 	
 }
