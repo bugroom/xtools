@@ -281,4 +281,29 @@ public class ImageUtilTest {
 		Assert.assertEquals(ImageUtil.getImageType(new File(destPath)),  "gif");
 	}
 	
+	/**
+	 * 测试图片合并
+	 * @throws IOException
+	 */
+	@Test
+	public void testMergeImages() throws IOException {
+		String imageName = "java_coffee.jpg";
+		String img1Path = IMAGE_PATH + imageName;
+		
+		imageName = "scenery.jpg";
+		String img2Path = IMAGE_PATH + imageName;
+		
+		String destPath1 = IMAGE_PATH + "merge.jpg";
+		String destPath2 = IMAGE_PATH + "merge_maxborder.jpg";
+		
+		int x = -100;
+		int y = -100;
+		
+		boolean maxBorder = false;//以图片1坐标和尺寸为准
+		ImageUtil.mergeImages(img1Path, img2Path, x, y, destPath1, ImageUtil.JPG, maxBorder);
+		
+		maxBorder = true;//取最大边框
+		ImageUtil.mergeImages(img1Path, img2Path, x, y, destPath2, ImageUtil.JPG, maxBorder);
+	}
+	
 }
