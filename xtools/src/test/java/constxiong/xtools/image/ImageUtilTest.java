@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -304,6 +305,23 @@ public class ImageUtilTest {
 		
 		maxBorder = true;//取最大边框
 		ImageUtil.mergeImages(img1Path, img2Path, x, y, destPath2, ImageUtil.JPG, maxBorder);
+	}
+	
+	/**
+	 * 测试制作水印
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 */
+	@Test
+	public void testMakeWatermark() throws FileNotFoundException, IOException {
+		String imageName = "java_coffee.jpg";
+		String srcPath = IMAGE_PATH + imageName;
+		
+		imageName = "java_coffee_wm.jpg";
+		String detsPath = IMAGE_PATH + imageName;
+		ImageUtil.makeWatermark(new FileInputStream(srcPath), 
+				new FileOutputStream(detsPath), "测试水印", "jpg");
+		
 	}
 	
 }

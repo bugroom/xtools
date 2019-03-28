@@ -3,8 +3,10 @@ package constxiong.xtools.image;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -640,6 +643,56 @@ public class ImageUtil {
 		int w2 = img2.getWidth();
 		int h2 = img2.getHeight();
 		return x < 0 || y < 0 || w1 - x < w2 || h1 - y < h2;
+	}
+	
+	/**
+	 * 在图片右下角添加白色文字水印
+	 * @param is
+	 * @param os
+	 * @param text
+	 * @throws IOException 
+	 */
+	public static void makeWatermark(InputStream is, OutputStream os, String text, String format) throws IOException {
+		BufferedImage image = ImageIO.read(is);
+		if (image != null) {
+			int width = image.getWidth();
+			int height = image.getHeight();
+			
+			//计算字体大小
+			int fontSize = (int)(width * height * 0.000008 + 13);
+			Font font = new Font("宋体", Font.PLAIN, fontSize);
+			
+			Graphics2D g = image.createGraphics();
+			g.setFont(font); 
+			g.setColor(Color.white); //水印颜色-白色 
+			
+//			// 透明度 
+//			float alpha = 0.9f; 
+//			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha)); 
+			
+			int x = width - getWatermarkLength(text, g) - 10; 
+			x = x < 0 ? 0 : x;
+			int y = height - 10;
+			y = y < 0 ? 0 : y;
+			
+			//对线段的锯齿状边缘处理
+			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			g.drawString(text, x, y); 
+			g.dispose();
+			
+			ImageIO.write(image, format, os);
+		}
+	}
+	
+	/** 
+	* 获取水印文字总长度 
+	* @param text 水印的文字 
+	* @param g 
+	* @return 水印文字总长度 
+	*/ 
+	private static int getWatermarkLength(String text, Graphics g) { 
+		return g.getFontMetrics(g.getFont()).charsWidth(
+				text.toCharArray(), 0, text.length()); 
 	}
 }
 
