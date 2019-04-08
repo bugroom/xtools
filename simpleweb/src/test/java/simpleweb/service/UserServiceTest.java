@@ -55,6 +55,6 @@ public class UserServiceTest {
 	
 	@Test
 	public void deleteUserTest() {
-		Assert.assertTrue(userService.deleteUser(3));
+		Assert.assertTrue(userService.deleteUser(4));
 	}
 }

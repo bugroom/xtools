@@ -1,7 +1,6 @@
 package simpleweb.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -21,34 +21,32 @@ public class JdbcHelper {
 
 	private static final Logger LOG = LoggerFactory.getLogger(JdbcHelper.class);
 	
-	private static final String DRIVER;
-	private static final String URL;
-	private static final String USERNAME;
-	private static final String PASSWORD;
-	
-	private static final QueryRunner QUERY_RUNNER = new QueryRunner();
-	
-	private static final ThreadLocal<Connection> CONNECTION_HOLDER = new ThreadLocal<Connection>();
+	private static final QueryRunner QUERY_RUNNER;
+	private static final ThreadLocal<Connection> CONNECTION_HOLDER;
+	private static final BasicDataSource DATA_SOURCE;
 	
 	static {
-		Properties properties = PropertiesUtil.loadProperties("jdbc.properties");
-		DRIVER = properties.getProperty("jdbc_driver");
-		URL = properties.getProperty("jdbc_url");
-		USERNAME = properties.getProperty("jdbc_username");
-		PASSWORD = properties.getProperty("jdbc_password");
+		CONNECTION_HOLDER = new ThreadLocal<Connection>();
+		QUERY_RUNNER = new QueryRunner();
 		
-		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException e) {
-			LOG.error(DRIVER + " jdbc driver not found", e);
-		}
+		Properties properties = PropertiesUtil.loadProperties("jdbc.properties");
+		String driver = properties.getProperty("jdbc_driver");
+		String url = properties.getProperty("jdbc_url");
+		String username = properties.getProperty("jdbc_username");
+		String password = properties.getProperty("jdbc_password");
+		
+		DATA_SOURCE = new BasicDataSource();
+		DATA_SOURCE.setDriverClassName(driver);
+		DATA_SOURCE.setUrl(url);
+		DATA_SOURCE.setUsername(username);
+		DATA_SOURCE.setPassword(password);
 	}
 	
 	public static Connection getConnection() {
 		Connection conn = CONNECTION_HOLDER.get();
 		if (conn == null) {
 			try {
-				conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+				conn = DATA_SOURCE.getConnection();
 			} catch (SQLException e) {
 				LOG.error("get database connection failed", e);
 				throw new RuntimeException(e);
