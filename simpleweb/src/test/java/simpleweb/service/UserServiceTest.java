@@ -26,5 +26,7 @@ public class UserServiceTest {
 		System.out.println("test");
 		List<User> users = userService.getUsers(null);
 		Assert.assertEquals(2, users.size());
+		System.out.println(users.get(0).getId());
+		System.out.println(users.get(0).getEmail());
 	}
 }
