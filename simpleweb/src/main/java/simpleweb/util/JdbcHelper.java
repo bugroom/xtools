@@ -3,14 +3,17 @@ package simpleweb.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -124,5 +127,49 @@ public class JdbcHelper {
 			closeConnection();
 		}
 		return rows;
+	}
+	
+	public static <T> boolean insertEntity(Class<T> entityClass, Map<String, Object> fields) {
+		if (MapUtils.isNotEmpty(fields)) {
+			StringBuilder sql = new StringBuilder();
+			sql.append("insert into ").append(getTableName(entityClass)).append(" (");
+			List<String> keyList = new ArrayList<String>();
+			List<Object> valueList = new ArrayList<Object>();
+			List<String> placeholders = new ArrayList<String>();
+			for (Map.Entry<String, Object> entity : fields.entrySet()) {
+				keyList.add(entity.getKey());
+				valueList.add(entity.getValue());
+				placeholders.add("?");
+			}
+			sql.append(StringUtils.join(keyList, ",")).append(") values (").append(StringUtils.join(placeholders, ",")).append(")");
+			return executeUpdate(sql.toString(), valueList.toArray()) == 1;
+		}
+		return false;
+	}
+	
+	public static <T> boolean updateEntity(Class<T> entityClass, int id, Map<String, Object> fields) {
+		if (MapUtils.isNotEmpty(fields)) { 
+			StringBuilder sql = new StringBuilder();
+			sql.append("update ").append(getTableName(entityClass)).append(" set ");
+			List<Object> valueList = new ArrayList<Object>();
+			List<String> placeholders = new ArrayList<String>();
+			for (Map.Entry<String, Object> entity : fields.entrySet()) {
+				placeholders.add(entity.getKey() + " = ?");
+				valueList.add(entity.getValue());
+			}
+			sql.append(StringUtils.join(placeholders, ",")).append(" where id = ?");
+			valueList.add(id);
+			return executeUpdate(sql.toString(), valueList.toArray()) == 1;
+		}
+		return false;
+	}
+	
+	public static <T> boolean deleteEntity(Class<T> entityClass, int id) {
+		String sql = "delete from " + getTableName(entityClass) + " where id = ?";
+		return executeUpdate(sql, id) == 1;
+	}
+	
+	public static String getTableName(Class<?> entityClass) {
+		return entityClass.getSimpleName();
 	}
 }

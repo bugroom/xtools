@@ -23,16 +23,16 @@ public class UserService {
 		return JdbcHelper.queryEntity(User.class, sql);
 	}
 	
-	public int createUser(Map<String, Object> user) {
-		return 0;
+	public boolean createUser(Map<String, Object> user) {
+		return JdbcHelper.insertEntity(User.class, user);
 	}
 	
-	public int updateUser(int id, Map<String, Object> user) {
-		return 0;
+	public boolean updateUser(int id, Map<String, Object> user) {
+		return JdbcHelper.updateEntity(User.class, id, user);
 	}
 	
-	public int deleteUser(int id) {
-		return 0;
+	public boolean deleteUser(int id) {
+		return JdbcHelper.deleteEntity(User.class, id);
 	}
 	
 }
