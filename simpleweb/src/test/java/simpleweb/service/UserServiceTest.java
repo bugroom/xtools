@@ -8,7 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import simpleweb.model.User;
+import simple.web.model.User;
+import simple.web.service.UserService;
 
 public class UserServiceTest {
 
@@ -27,7 +28,7 @@ public class UserServiceTest {
 	public void getUsersTest() {
 		System.out.println("test");
 		List<User> users = userService.getUsers(null);
-		Assert.assertEquals(3, users.size());
+		Assert.assertEquals(2, users.size());
 		System.out.println(users.get(0).getId());
 		System.out.println(users.get(0).getEmail());
 	}

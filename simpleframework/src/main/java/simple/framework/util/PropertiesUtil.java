@@ -1,4 +1,4 @@
-package simpleweb.util;
+package simple.framework.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PropertiesUtil {
+public final class PropertiesUtil {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PropertiesUtil.class);
 	

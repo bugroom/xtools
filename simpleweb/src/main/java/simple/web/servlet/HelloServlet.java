@@ -1,4 +1,4 @@
-package simpleweb.servlet;
+package simple.web.servlet;
 
 import java.io.IOException;
 

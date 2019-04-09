@@ -1,8 +1,8 @@
-package simpleweb.util;
+package simple.framework.util;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class CastUtil {
+public final class CastUtil {
 
 	public static String castString(Object obj) {
 		return castString(obj, "");

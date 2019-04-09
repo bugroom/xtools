@@ -1,4 +1,4 @@
-package simpleweb.servlet;
+package simple.web.servlet;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import simpleweb.model.User;
-import simpleweb.service.UserService;
+import simple.web.model.User;
+import simple.web.service.UserService;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet{

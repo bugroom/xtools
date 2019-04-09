@@ -1,4 +1,4 @@
-package simpleweb.model;
+package simple.web.model;
 
 public class User {
 
