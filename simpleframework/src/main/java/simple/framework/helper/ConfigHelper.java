@@ -35,11 +35,11 @@ public class ConfigHelper {
 	}
 	
 	public static String getJspPackage() {
-		return PropertiesUtil.getString(CONFIG_PROPERTIES, ConfigConstant.JSP_PACKAGE);
+		return PropertiesUtil.getString(CONFIG_PROPERTIES, ConfigConstant.JSP_PATH);
 	}
 	
 	public static String getAssertPackage() {
-		return PropertiesUtil.getString(CONFIG_PROPERTIES, ConfigConstant.ASSERT_PACKAGE);
+		return PropertiesUtil.getString(CONFIG_PROPERTIES, ConfigConstant.ASSERT_PATH);
 	}
 	
 }

@@ -13,7 +13,7 @@ public interface ConfigConstant {
 	String JDBC_PASSWORD = "jdbc_password";
 	
 	String BASE_PACKAGE = "base_package";
-	String JSP_PACKAGE = "jsp_package";
-	String ASSERT_PACKAGE = "assert_package";
+	String JSP_PATH = "jsp_path";
+	String ASSERT_PATH = "assert_path";
 
 }
