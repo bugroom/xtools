@@ -1,5 +1,9 @@
 package simpleweb.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -169,5 +173,29 @@ public class JdbcHelper {
 	
 	public static String getTableName(Class<?> entityClass) {
 		return entityClass.getSimpleName();
+	}
+	
+	public static void executeSqlFile(String filePath) {
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		String sql;
+		try {
+			while ((sql = br.readLine()) != null) {
+				executeUpdate(sql);
+			}
+		} catch (IOException e) {
+			LOG.error("executeSqlFile failed", e);
+		} finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+				if (is != null) {
+					is.close();
+				}
+			} catch (IOException e) {
+				LOG.error("close io failed", e);
+			}
+		}
 	}
 }
