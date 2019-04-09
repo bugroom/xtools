@@ -1,15 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>simpleweb</groupId>
+	<groupId>constxiong</groupId>
 	<version>0.0.1-SNAPSHOT</version>
 	<artifactId>simpleweb</artifactId>
 	<packaging>war</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jackson.version>2.9.5</jackson.version>
-		<srping.version>4.3.3.RELEASE</srping.version>
 	</properties>
 
 	<dependencies>
@@ -98,6 +96,13 @@
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-dbcp2</artifactId>
 		    <version>2.1.1</version>
+		</dependency>
+		
+		<!-- jsckson -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.9.5</version>
 		</dependency>
 		
 	</dependencies>
