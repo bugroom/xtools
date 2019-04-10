@@ -45,7 +45,7 @@ public class DispatcherServlet extends HttpServlet{
 		ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
 		jspServlet.addMapping(ConfigHelper.getJspPackage() + "*");
 		ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
-		defaultServlet.addMapping(ConfigHelper.getJspPackage() + "*");
+		defaultServlet.addMapping(ConfigHelper.getAssertPackage() + "*");
 	}
 
 	@Override
