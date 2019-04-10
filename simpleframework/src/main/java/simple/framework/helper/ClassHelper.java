@@ -41,8 +41,8 @@ public class ClassHelper {
 	}
 	
 	public static Set<Class<?>> getBeanClassSet() {
-		Set<Class<?>> classSet = new HashSet<Class<?>>();
-		classSet.addAll(getControllerClassSet());
+		Set<Class<?>> classSet = 
+				new HashSet<Class<?>>(getControllerClassSet());
 		classSet.addAll(getServiceClassSet());
 		return classSet;
 	}
