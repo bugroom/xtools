@@ -12,6 +12,6 @@ public class TestProxy {
 		DynamicProxy dynamicProxy = new DynamicProxy(hello);
 		Hello helloProxy = (Hello) Proxy.newProxyInstance(
 				hello.getClass().getClassLoader(), hello.getClass().getInterfaces(), dynamicProxy);
-		helloProxy.say("constion");
+		helloProxy.say("constxiong");
 	}
 }
