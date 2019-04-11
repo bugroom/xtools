@@ -1,4 +1,4 @@
-package constxiong.interview.proxy.cglic;
+package constxiong.interview.proxy.cglib;
 
 import java.lang.reflect.Method;
 

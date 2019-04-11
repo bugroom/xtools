@@ -1,4 +1,4 @@
-package constxiong.interview.proxy.cglic;
+package constxiong.interview.proxy.cglib;
 
 import constxiong.interview.proxy.staticproxy.Hello;
 import constxiong.interview.proxy.staticproxy.HelloImpl;
