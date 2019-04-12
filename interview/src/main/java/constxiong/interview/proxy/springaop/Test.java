@@ -87,6 +87,10 @@ public class Test {
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring_intro.xml");
 		GreetingImpl greeting = (GreetingImpl)context.getBean("greetingProxy");
 		greeting.sayHello(WHO);
+		
+		Apology apology = (Apology)greeting;
+		apology.saySorry(WHO);
+		
 	}
 	
 }
