@@ -12,7 +12,8 @@ public class Test {
 	
 	public static void main(String[] args) {
 //		aspectj();
-		aspectjDeclareParents();
+//		aspectjDeclareParents();
+		aspectUseXmlConfig();
 	}
 	
 	public static void aspectj() {
@@ -30,5 +31,12 @@ public class Test {
 		
 		Apology apology = (Apology)greeting;
 		apology.saySorry(WHO);
+	}
+	
+	public static void aspectUseXmlConfig() {
+		@SuppressWarnings("resource")
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring_aspect_declare_parent.xml");
+		GreetingImpl greeting = (GreetingImpl)context.getBean("greetingImpl");
+		greeting.sayHello(WHO);
 	}
 }
