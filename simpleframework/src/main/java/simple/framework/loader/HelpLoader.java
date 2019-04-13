@@ -1,5 +1,6 @@
 package simple.framework.loader;
 
+import simple.framework.helper.AopHelper;
 import simple.framework.helper.BeanHelper;
 import simple.framework.helper.ClassHelper;
 import simple.framework.helper.ConfigHelper;
@@ -15,6 +16,7 @@ public final class HelpLoader {
 				ConfigHelper.class,
 				ClassHelper.class,
 				BeanHelper.class,
+				AopHelper.class,
 				IocHelper.class,
 				ControllerHelper.class,
 				JdbcHelper.class
