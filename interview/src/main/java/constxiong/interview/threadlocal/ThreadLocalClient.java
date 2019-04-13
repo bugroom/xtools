@@ -10,7 +10,7 @@ public class ThreadLocalClient extends Thread {
 	
 	@Override
 	public void run() {
-		for (int i = 0; i < 30000; i++) {
+		for (int i = 0; i < 300; i++) {
 			System.out.println(Thread.currentThread().getName()
 					+ " => " + sequence.getNumber());
 		}
@@ -18,7 +18,8 @@ public class ThreadLocalClient extends Thread {
 	
 	public static void main(String[] args) {
 //		testSeqA();
-		testSeqB();
+//		testSeqB();
+		testSeqC();
 	}
 	
 	public static void testSeqA() {
@@ -33,6 +34,16 @@ public class ThreadLocalClient extends Thread {
 	
 	public static void testSeqB() {
 		Sequence sequence = new SequenceB();
+		ThreadLocalClient c1 = new ThreadLocalClient(sequence);
+		ThreadLocalClient c2 = new ThreadLocalClient(sequence);
+		ThreadLocalClient c3 = new ThreadLocalClient(sequence);
+		c1.start();
+		c2.start();
+		c3.start();
+	}
+	
+	public static void testSeqC() {
+		Sequence sequence = new SequenceC();
 		ThreadLocalClient c1 = new ThreadLocalClient(sequence);
 		ThreadLocalClient c2 = new ThreadLocalClient(sequence);
 		ThreadLocalClient c3 = new ThreadLocalClient(sequence);
