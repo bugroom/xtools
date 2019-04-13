@@ -2,9 +2,12 @@ package constxiong.interview.aop;
 
 import org.springframework.stereotype.Service;
 
+//import constxiong.interview.aspectj.annotation.Tag;
+
 @Service("aopGreetingImpl")
 public class GreetingImpl implements Greeting {
 
+//	@Tag
 	public void sayHello(String name) {
 		System.out.println("Hello! " + name);
 	}

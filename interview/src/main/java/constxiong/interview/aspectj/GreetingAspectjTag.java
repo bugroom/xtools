@@ -7,16 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class GreetingAspectj {
+public class GreetingAspectjTag {
 
-	/**
-	 * 第一个*表示任意返回值,第二个*表示任意方法,..表示任意参数
-	 * @param pjp
-	 * @return
-	 * @throws Throwable
-	 */
-	@Around("execution(* constxiong.interview.aop.GreetingImpl.*(..))")
-	public Object around(ProceedingJoinPoint pjp) throws Throwable{
+
+	//@Around @Before @After @AfterThrowing @DeclareParents-引入增强
+	
+	@Around("@annotation(constxiong.interview.aspectj.annotation.Tag)")
+	public Object around(ProceedingJoinPoint pjp) throws Throwable {
 		before();
 		Object result = pjp.proceed();
 		after();
