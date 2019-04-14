@@ -2,6 +2,8 @@ package simple.framework.bean;
 
 import java.util.Map;
 
+import org.apache.commons.collections4.MapUtils;
+
 import simple.framework.util.CastUtil;
 
 public class Param {
@@ -20,4 +22,7 @@ public class Param {
 		return this.paramMap;
 	}
 	
+	public boolean isEmpty() {
+		return MapUtils.isEmpty(this.paramMap);
+	}
 }

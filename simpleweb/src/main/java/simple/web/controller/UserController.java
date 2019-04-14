@@ -15,7 +15,7 @@ public class UserController {
 	private UserService userService;
 	
 	@Action("get:/users")
-	public Data getUsers(Param param) {
+	public Data getUsers() {
 		return new Data(userService.getUsers(null));
 	}
 	
