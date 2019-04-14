@@ -86,7 +86,7 @@ public class JdbcHelper {
 			LOG.error("query entity list failed", e);
 			throw new RuntimeException(e);
 		} finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return entityList;
 	}
@@ -100,7 +100,7 @@ public class JdbcHelper {
 			LOG.error("query entity failed", e);
 			throw new RuntimeException(e);
 		} finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return entity;
 	}
@@ -114,7 +114,7 @@ public class JdbcHelper {
 			LOG.error("query map failed", e);
 			throw new RuntimeException(e);
 		} finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result;
 	}
@@ -128,7 +128,7 @@ public class JdbcHelper {
 			LOG.error("execute update failed", e);
 			throw new RuntimeException(e);
 		} finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return rows;
 	}
@@ -200,4 +200,53 @@ public class JdbcHelper {
 			}
 		}
 	}
+	
+	public static void beginTransaction() {
+		Connection conn = getConnection();
+		if (conn != null) {
+			try {
+				conn.setAutoCommit(false);
+			} catch (SQLException e) {
+				LOG.error("begin transaction failed", e);
+				throw new RuntimeException(e);
+			} finally {
+				CONNECTION_HOLDER.set(conn);
+			}
+			
+		}
+	}
+	
+	public static void commitTransaction() {
+		Connection conn = getConnection();
+		if (conn != null) {
+			try {
+				conn.commit();
+				conn.close();
+			} catch (SQLException e) {
+				LOG.error("commit transaction failed", e);
+				throw new RuntimeException(e);
+			} finally {
+				CONNECTION_HOLDER.remove();
+			}
+		}
+	}
+	
+	public static void rollbackTransaction() {
+		Connection conn = getConnection();
+		if (conn != null) {
+			try {
+				conn.rollback();
+				conn.close();
+			} catch (SQLException e) {
+				LOG.error("rollback transaction failed", e);
+				throw new RuntimeException(e);
+			} finally {
+				CONNECTION_HOLDER.remove();
+			}
+		}
+	}
+	
+	
+	
+	
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 //import org.slf4j.LoggerFactory;import simple.framework.util.JdbcHelper;
 
 import simple.framework.annotation.Service;
+import simple.framework.annotation.Transaction;
 import simple.framework.helper.JdbcHelper;
 import simple.web.model.User;
 
@@ -14,6 +15,7 @@ public class UserService {
 
 //	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 	
+	@Transaction
 	public List<User> getUsers(String key) {
 		String sql = "select * from user";
 		return JdbcHelper.queryEntityList(User.class, sql);
