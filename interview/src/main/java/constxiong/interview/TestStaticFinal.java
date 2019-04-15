@@ -2,6 +2,11 @@ package constxiong.interview;
 
 import java.util.Random;
 
+/**
+ * final 和 static 变量的初始化与可改变性问题
+ * @author ConstXiong
+ * @date 2019-04-15 09:35:01
+ */
 public class TestStaticFinal {
 
 	public static void main(String[] args) {

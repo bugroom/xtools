@@ -85,7 +85,7 @@ public class Test {
 	public static void springIntroProxy() {
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring_intro.xml");
-		GreetingImpl greeting = (GreetingImpl)context.getBean("greetingProxy");
+		Greeting greeting = (Greeting)context.getBean("greetingProxy");
 		greeting.sayHello(WHO);
 		
 		Apology apology = (Apology)greeting;

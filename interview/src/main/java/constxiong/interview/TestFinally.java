@@ -1,5 +1,10 @@
 package constxiong.interview;
 
+/**
+ * 未执行finally的情况
+ * @author ConstXiong
+ * @date 2019-04-15 09:30:27
+ */
 public class TestFinally {
 
 	public static void main(String[] args) {
