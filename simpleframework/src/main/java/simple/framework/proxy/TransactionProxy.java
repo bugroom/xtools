@@ -44,6 +44,7 @@ public class TransactionProxy implements Proxy {
 			}
 		 } else {
 			 result = proxyChain.doProxyChain();
+			 JdbcHelper.closeConnection();
 		 }
 		return result;
 	}

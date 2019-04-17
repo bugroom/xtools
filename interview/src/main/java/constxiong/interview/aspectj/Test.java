@@ -12,8 +12,8 @@ public class Test {
 	
 	public static void main(String[] args) {
 //		aspectj();
-//		aspectjDeclareParents();
-		aspectUseXmlConfig();
+		aspectjDeclareParents();
+//		aspectUseXmlConfig();
 	}
 	
 	public static void aspectj() {

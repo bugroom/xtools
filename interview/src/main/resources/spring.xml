@@ -19,7 +19,6 @@
 				<value>greetingThrowAdvice</value>
 			</list>
 		</property>
-	
 	</bean>
 	
 </beans>

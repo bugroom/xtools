@@ -16,7 +16,7 @@ public class UserController {
 	
 	@Action("get:/users")
 	public Data getUsers() {
-		return new Data(userService.getUsers(null));
+		return new Data(userService.getUser(1));
 	}
 	
 	@Action("get:/toUsers")
