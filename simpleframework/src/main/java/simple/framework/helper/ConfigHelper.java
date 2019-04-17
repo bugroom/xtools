@@ -41,5 +41,9 @@ public class ConfigHelper {
 	public static String getAssertPackage() {
 		return PropertiesUtil.getString(CONFIG_PROPERTIES, ConfigConstant.ASSERT_PATH);
 	}
+
+	public static int getAppUploadLimit() {
+		return PropertiesUtil.getInt(CONFIG_PROPERTIES, ConfigConstant.UPLOAD_MAX_SIZE, 1 * 1024 * 1024);
+	}
 	
 }

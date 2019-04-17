@@ -15,5 +15,8 @@ public interface ConfigConstant {
 	String BASE_PACKAGE = "base_package";
 	String JSP_PATH = "jsp_path";
 	String ASSERT_PATH = "assert_path";
+	String UPLOAD_MAX_SIZE = "upload_max_size";
+	
+	String SEPARATOR = String.valueOf((char) 29);
 
 }

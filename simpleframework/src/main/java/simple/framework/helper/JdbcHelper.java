@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -244,6 +245,22 @@ public class JdbcHelper {
 				CONNECTION_HOLDER.remove();
 			}
 		}
+	}
+
+	/**
+	 * 获取数据库事务隔离级别
+	 * @return
+	 */
+	public static int getDatabaseIsolation() {
+		int isolation = -1;
+		try {
+			DatabaseMetaData meta = getConnection().getMetaData();
+			isolation = meta.getDefaultTransactionIsolation();
+		} catch (SQLException e) {
+			LOG.error("get database isolation failed", e);
+			throw new RuntimeException(e);
+		}
+		return isolation;
 	}
 	
 }
