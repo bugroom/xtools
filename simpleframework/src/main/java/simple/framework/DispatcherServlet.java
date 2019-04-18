@@ -25,6 +25,7 @@ import simple.framework.helper.BeanHelper;
 import simple.framework.helper.ConfigHelper;
 import simple.framework.helper.ControllerHelper;
 import simple.framework.helper.RequestHelper;
+import simple.framework.helper.ServletHelper;
 import simple.framework.helper.UploadHelper;
 import simple.framework.loader.HelpLoader;
 import simple.framework.util.JsonUtil;
@@ -50,38 +51,43 @@ public class DispatcherServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String requestMethod = req.getMethod().toLowerCase();
-		String requestPath = req.getPathInfo();
-		
-		if (requestPath.equals("/favicon.ico")) {
-			return;
-		}
-		
-		Handler handler = ControllerHelper.getHandler(requestMethod, requestPath);
-		if (handler != null) {
-			Class<?> controllerClass = handler.getControllerClass();
-			Object controllerBean = BeanHelper.getBean(controllerClass);
+		ServletHelper.init(req, resp);
+		try {
+			String requestMethod = req.getMethod().toLowerCase();
+			String requestPath = req.getPathInfo();
 			
-			Param param;
-			if (UploadHelper.isMultipart(req)) {
-				param = UploadHelper.createParam(req);
-			} else {
-				param = RequestHelper.createParam(req);
+			if (requestPath.equals("/favicon.ico")) {
+				return;
 			}
 			
-			Object result;
-			Method actionMethod = handler.getActionMethod();
-			if (param.isEmpty()) {
-				result = RefectionUtil.invokeMethod(controllerBean, actionMethod);
-			} else {
-				result = RefectionUtil.invokeMethod(controllerBean, actionMethod, param);
+			Handler handler = ControllerHelper.getHandler(requestMethod, requestPath);
+			if (handler != null) {
+				Class<?> controllerClass = handler.getControllerClass();
+				Object controllerBean = BeanHelper.getBean(controllerClass);
+				
+				Param param;
+				if (UploadHelper.isMultipart(req)) {
+					param = UploadHelper.createParam(req);
+				} else {
+					param = RequestHelper.createParam(req);
+				}
+				
+				Object result;
+				Method actionMethod = handler.getActionMethod();
+				if (param.isEmpty()) {
+					result = RefectionUtil.invokeMethod(controllerBean, actionMethod);
+				} else {
+					result = RefectionUtil.invokeMethod(controllerBean, actionMethod, param);
+				}
+				
+				if (result instanceof View) {
+					handleViewResult((View)result, req, resp);
+				} else if (result instanceof Data) {
+					handleDataResult((Data)result, req, resp);
+				}
 			}
-			
-			if (result instanceof View) {
-				handleViewResult((View)result, req, resp);
-			} else if (result instanceof Data) {
-				handleDataResult((Data)result, req, resp);
-			}
+		} finally {
+			ServletHelper.destroy();
 		}
 	}
 
