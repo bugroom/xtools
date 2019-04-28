@@ -196,7 +196,7 @@ public class ImageUtilTest {
 		imageName = "java_coffee_compress.png";
 		String destPath = IMAGE_PATH + imageName;
 		
-		ImageUtil.compressImageByThumbnails(srcPath, destPath, 0.5f);
+		ImageUtil.compressImageByThumbnails(srcPath, destPath, 0.1f, 0.1f);
 		
 		long srcImageLength = new File(srcPath).length();
 		long destImageLength = new File(destPath).length();

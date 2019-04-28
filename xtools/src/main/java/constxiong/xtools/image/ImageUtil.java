@@ -354,12 +354,13 @@ public class ImageUtil {
 	 * 支持所有格式图片，存在压缩后图片文件占用内存变大的情况
 	 * @param srcPath 原文件路径
 	 * @param destPath 压缩后的文件路径
+	 * @param scale 压缩图的比例因子(0,1]
 	 * @param quality 图片质量，取值范围[0, 1]
 	 * @return
 	 * @throws IOException 
 	 */
-	public static boolean compressImageByThumbnails (String srcPath, String destPath, float quality) throws IOException {
-		Thumbnails.of(srcPath).scale(1f).outputQuality(quality).toFile(destPath);
+	public static boolean compressImageByThumbnails (String srcPath, String destPath, float scale, float quality) throws IOException {
+		Thumbnails.of(srcPath).scale(scale).outputQuality(quality).toFile(destPath);
 		return true;
 	}
 	
