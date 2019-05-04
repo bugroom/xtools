@@ -23,7 +23,8 @@ public class TestNioFiles {
 //		testIsHidden();
 //		testIsWritable();
 //		testIsRegularFile();
-		testGetPosixFilePermissions();
+//		testGetPosixFilePermissions();
+//		testGetOwner();
 	}
 	
 	public static void testIsExecutable() {
@@ -88,6 +89,10 @@ public class TestNioFiles {
 		}
 	}
 	
+	public static void testGetOwner() throws IOException {
+		Path path_js = Paths.get("/Users/handsome/Desktop/xo.js");
+		System.out.println(Files.getOwner(path_js));
+	}
 	
 	public static void test() throws IOException {
 		Path path = Paths.get("C:/Users/dell/Desktop/questions.txt");

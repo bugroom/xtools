@@ -1,0 +1,31 @@
+java 容器都有哪些？
+|Collection
+|　　├AbstractCollection
+|　　│ 
+|　　├List 
+|　　│-├AbstractList 
+|　　│-├ArrayList 
+|　　│-├LinkedList
+|　　│-└Vector 
+|　　│　└Stack 
+|　　│
+|　　├Set
+|　　│├AbstractSet 
+|　　│├HashSet
+|　　│├LinkedHashSet 
+|　　│├TreeSet 
+|　　│└SortedSet 
+|　　│
+|　　├Queue
+|　　│├AbstractQueue
+|　　│├BlockingQueue 
+|　　│└Deque 
+| 
+|　　├Map 
+|　　│├AbstractMap
+|　　│├Hashtable 
+|　　│├HashMap
+|　　│├IdentityHashMap
+|　　│├LinkedHashMap
+|　　│├SortedMap 
+|　　│└WeakHashMap
