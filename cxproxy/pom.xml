@@ -10,6 +10,13 @@
 	</properties>
 		
 	<dependencies>
+		
+		<!-- 添加cglib的依赖 -->
+		<dependency>
+		    <groupId>cglib</groupId>
+		    <artifactId>cglib</artifactId>
+		    <version>3.2.10</version>
+		</dependency>
 			
 	</dependencies>
 	
