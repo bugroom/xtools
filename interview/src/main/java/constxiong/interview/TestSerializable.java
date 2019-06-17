@@ -1,7 +1,17 @@
 package constxiong.interview;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * 测试序列化，反序列化
+ * @author ConstXiong
+ * @date 2019-06-17 09:31:22
+ */
 public class TestSerializable implements Serializable {
 
 	private static final long serialVersionUID = 5887391604554532906L;
@@ -15,13 +25,25 @@ public class TestSerializable implements Serializable {
 		this.name = name;
 	}
 	
-	//https://www.cnblogs.com/yangchunze/p/6728086.html
-	public static void main(String[] args) {
+	@Override
+	public String toString() {
+		return "TestSerializable [id=" + id + ", name=" + name + "]";
+	}
+
+	@SuppressWarnings("resource")
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		//序列化
-//		Object
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("TestSerializable.obj"));
+		oos.writeObject("测试序列化");
+		oos.writeObject(618);
+		TestSerializable test = new TestSerializable(1, "ConstXiong");
+		oos.writeObject(test);
 		
 		//反序列化
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("TestSerializable.obj"));
+		System.out.println((String)ois.readObject());
+		System.out.println((Integer)ois.readObject());
+		System.out.println((TestSerializable)ois.readObject());
 	}
-	
 
 }
