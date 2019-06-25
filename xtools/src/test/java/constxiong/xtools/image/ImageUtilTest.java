@@ -207,6 +207,17 @@ public class ImageUtilTest {
 	}
 	
 	/**
+	 * 测试图片压缩
+	 * @throws IOException
+	 */
+	@Test
+	public void testCompressMypic() throws IOException {
+		
+		ImageUtil.compressImageByThumbnails("C:\\Users\\dell\\Desktop\\熊俊.jpg", "C:\\Users\\dell\\Desktop\\熊俊_.jpg", 1f, 0.9f);
+		
+	}
+	
+	/**
 	 * 测试Jdk图片压缩
 	 * @throws IOException
 	 */
