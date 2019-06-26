@@ -9,20 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * hello servlet
+ * redirect servlet
  * @author ConstXiong
  * @date 2019-06-26 10:00:34
  */
-@WebServlet("/hello")
-public class HelloServlet extends HttpServlet {
+@WebServlet("/redirect")
+public class RedirectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public HelloServlet() {
+    public RedirectServlet() {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		response.setStatus(301);//设置返回状态码301
-		response.setStatus(302);//设置返回状态码302
 		response.sendRedirect("http://www.baidu.com");
 	}
 
