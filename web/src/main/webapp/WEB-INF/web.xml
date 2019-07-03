@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>JsonpServlet</display-name>
+    <servlet-name>JsonpServlet</servlet-name>
+    <servlet-class>constxiong.JsonpServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JsonpServlet</servlet-name>
+    <url-pattern>/JsonpServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jsonp test</title>
+</head>
+<body>
+
+<script>
+	//学生id
+	var sid = 1;
+	
+	//定义函数显示学生信息
+	var alertStudent = function(data) {
+		if (data == null) {
+			alert('没有该学生信息');
+		} else {
+			alert('学号：' + data.sid + ', 姓名：' + data.name);	
+		}
+	}
+	
+	//动态生成 <script> 标签，后端调用  alertStudent 函数
+	var script = document.createElement('script');
+	script.src = 'http://www.aaa.com:8081/web/jsonp?sid='+sid + '&callback=alertStudent';
+	document.getElementsByTagName('head')[0].appendChild(script);
+</script>
+</body>
+</html>
