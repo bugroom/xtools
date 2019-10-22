@@ -6,6 +6,10 @@ package constxiong.interview;
  * @date 2019-10-17 13:44:05
  */
 public class TestAdd {
+	
+	TestAdd () {
+		
+	}
 
 	public static void main(String[] args) {
 		int a = 3;
