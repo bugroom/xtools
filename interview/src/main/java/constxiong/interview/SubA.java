@@ -1,17 +1,17 @@
 package constxiong.interview;
 
-public class AA extends A{
-    public AA(){
+public class SubA extends ParentA{
+    public SubA(){
         System.out.print("AA");
     }
 
     public static void main(String[] args) {
-        AA aa = new AA();
+    	SubA aa = new SubA();
     }
 }
 
-class A {
-    public A(){
+class ParentA {
+    public ParentA(){
         System.out.print("A");
     }
 }
