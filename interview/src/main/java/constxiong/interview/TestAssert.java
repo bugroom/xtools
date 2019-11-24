@@ -5,7 +5,7 @@ public class TestAssert {
 	public static void main(String[] args) {
 		assert 1 > 0;
 		int x = 1;
-		assert x > 0 : x < 0;
+		assert x < 0 : "大于0";
 	}
 	
 }
