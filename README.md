@@ -1,2 +1,3 @@
-**专栏一** [Java 面试题，持续更新](https://blog.csdn.net/meism5/article/details/89021536)<br>
-**专栏二** [Java 中的代理](https://blog.csdn.net/meism5/article/details/90486450)
+### [Java 面试题，持续更新...](https://www.javanav.com/interview/93b0069472fd479393006c0e73043fc4.html)
+示例代码在interview目录中
+
