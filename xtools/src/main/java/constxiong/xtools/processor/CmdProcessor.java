@@ -13,9 +13,11 @@ import java.io.InputStreamReader;
 public class CmdProcessor {
 	
 	public static void main(String[] args) {
+		//提交github
 		callCmd("E:\\resources\\bat\\git_pull.bat");
+		//生成内容，省略
+		//提交github
 		callCmd("E:\\resources\\bat\\git_push.bat");
-//		callCmd("cmd java -version");
 	}
 	
 	/**
